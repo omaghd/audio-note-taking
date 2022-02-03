@@ -19,8 +19,17 @@ class CreateTopicsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('time');
-            $table->foreignIdFor(Audio::class, 'audio_id');
-            $table->foreignIdFor(User::class, 'user_id');
+
+            $table->foreignIdFor(Audio::class, 'audio_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignIdFor(User::class, 'user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
