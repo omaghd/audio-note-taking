@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AudioController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,6 +18,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('', [AudioController::class, 'index']);
         Route::get('create', [AudioController::class, 'create']);
         Route::get('{audio}/edit', [AudioController::class, 'edit']);
+    });
+
+    Route::prefix('/topics')->group(function () {
+        Route::get('', [TopicController::class, 'index']);
     });
 });
 
