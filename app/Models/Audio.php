@@ -10,4 +10,9 @@ class Audio extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'path'];
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
