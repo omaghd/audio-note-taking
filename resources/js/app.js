@@ -1,7 +1,7 @@
 require('./bootstrap');
 
 import { createApp, h } from 'vue';
-import {createInertiaApp, Head} from '@inertiajs/inertia-vue3';
+import {createInertiaApp, Head, Link} from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 
@@ -15,6 +15,7 @@ createInertiaApp({
             .use(plugin)
             .mixin({ methods: { route } })
             .component('Head', Head)
+            .component('Link', Link)
             .component('BreezeAuthenticatedLayout', BreezeAuthenticatedLayout)
             .mount(el);
     },

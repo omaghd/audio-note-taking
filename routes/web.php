@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/topics')->group(function () {
         Route::get('', [TopicController::class, 'index'])->name('topics');
+        Route::delete('{topic}', [TopicController::class, 'destroy']);
     });
 });
 
