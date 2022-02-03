@@ -10,7 +10,19 @@ class AudioController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Admin/Audio/Index');
+        return Inertia::render('Admin/Audio/Index', [
+            'audios' => Audio::query()
+                ->when(request()->input('search'), function ($query, $search) {
+                    $query->where('title', 'like', "%{$search}%");
+                })
+                ->without(['topics'])
+                ->withCount('topics')
+                ->latest()
+                ->paginate(5)
+                ->withQueryString(),
+
+            'filters' => request()->only(['search'])
+        ]);
     }
 
     public function create()
