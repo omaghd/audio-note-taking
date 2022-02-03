@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('', [AudioController::class, 'index'])->name('audios');
         Route::get('create', [AudioController::class, 'create']);
         Route::get('{audio}/edit', [AudioController::class, 'edit']);
+        Route::delete('{audio}', [AudioController::class, 'destroy']);
     });
 
     Route::prefix('/topics')->group(function () {

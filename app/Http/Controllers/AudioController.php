@@ -47,6 +47,7 @@ class AudioController extends Controller
 
     public function destroy(Audio $audio)
     {
-        //
+        $audio->delete();
+        return back();
     }
 }
