@@ -15,13 +15,13 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::prefix('/audios')->group(function () {
-        Route::get('', [AudioController::class, 'index']);
+        Route::get('', [AudioController::class, 'index'])->name('audios');
         Route::get('create', [AudioController::class, 'create']);
         Route::get('{audio}/edit', [AudioController::class, 'edit']);
     });
 
     Route::prefix('/topics')->group(function () {
-        Route::get('', [TopicController::class, 'index']);
+        Route::get('', [TopicController::class, 'index'])->name('topics');
     });
 });
 
