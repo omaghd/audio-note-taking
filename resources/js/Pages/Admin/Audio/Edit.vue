@@ -12,7 +12,70 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        Audios edit form should be here!
+                        <form @submit.prevent="submit" class="max-w-md mx-auto mt-8" enctype="multipart/form-data">
+                            <div
+                                v-if="$page.props.flash.message && !processing"
+                                class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mb-6"
+                                role="alert">
+                                <div class="flex">
+                                    <div class="py-1">
+                                        <svg class="fill-current h-6 w-6 text-teal-500 mr-4"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path
+                                                d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold">
+                                            {{ $page.props.flash.message }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="title">
+                                    Title
+                                </label>
+
+                                <input v-model="form.title"
+                                       class="border border-gray-400 rounded p-2 w-full"
+                                       type="text"
+                                       name="title" id="title"/>
+                                <div v-if="errors.title" v-text="errors.title"
+                                     class="text-red-500 text-xs mt-1"></div>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="audio">
+                                    Audio file
+                                </label>
+
+                                <input class="border border-gray-400 rounded p-2 w-full"
+                                       type="file"
+                                       @input="form.audio = $event.target.files[0]"
+                                       name="audio" id="audio"/>
+                                <div v-if="errors.audio" v-text="errors.audio"
+                                     class="text-red-500 text-xs mt-1"></div>
+                            </div>
+
+                            <div class="mb-6">
+                                <button type="submit"
+                                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-teal-700 hover:bg-teal-600 transition ease-in-out duration-150"
+                                        :class="{'cursor-not-allowed': processing}"
+                                        :disabled="processing">
+                                    <svg
+                                        v-if="processing"
+                                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Edit
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -20,7 +83,37 @@
     </BreezeAuthenticatedLayout>
 </template>
 
-<script>
+<script setup>
+import { useForm } from '@inertiajs/inertia-vue3'
+import { Inertia } from "@inertiajs/inertia";
+import { ref } from "vue";
 
-export default {}
+let props = defineProps({
+    errors:     Object,
+    audio:      Object,
+    processing: Boolean
+})
+
+const processing = ref(false)
+
+let form = useForm({
+    title: props.audio.title,
+    audio: null,
+});
+
+let submit = () => {
+    Inertia.post(`/audios/${props.audio.id}`, {
+        _method: 'put',
+        title:   form.title,
+        audio:   form.audio,
+    }, {
+        onStart:  () => {
+            processing.value = true;
+        },
+        onFinish: () => {
+            processing.value = false;
+        }
+    })
+}
+
 </script>

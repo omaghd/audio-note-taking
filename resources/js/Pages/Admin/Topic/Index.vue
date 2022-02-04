@@ -99,8 +99,8 @@
 
 <script setup>
 import Pagination from '@/Shared/Pagination';
-import {ref, watch} from "vue";
-import {Inertia} from "@inertiajs/inertia";
+import { ref, watch } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 
 let props = defineProps({
@@ -111,7 +111,7 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, debounce(function (value) {
-    Inertia.get('/topics', {search: value}, {preserveState: true, replace: true});
+    Inertia.get('/topics', { search: value }, { preserveState: true, replace: true });
 }, 300));
 </script>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audio;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
 class AudioController extends Controller
@@ -37,12 +37,24 @@ class AudioController extends Controller
 
     public function edit(Audio $audio)
     {
-        return Inertia::render('Admin/Audio/Edit');
+        return Inertia::render('Admin/Audio/Edit', compact('audio'));
     }
 
-    public function update(Request $request, Audio $audio)
+    public function update(Audio $audio)
     {
-        //
+        Request::validate([
+            'title' => 'required',
+            'audio' => 'nullable|mimes:mp3',
+        ]);
+
+        if (Request::hasFile('audio'))
+            $audio->path = Request::file('audio')->storePublicly("public/audios");
+
+        $audio->title = Request::input('title');
+
+        $audio->save();
+
+        return back()->with('message', 'Updated successfully!');
     }
 
     public function destroy(Audio $audio)
