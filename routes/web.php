@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AudioController;
+use App\Http\Controllers\AudioTopicController;
 use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,6 +22,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('{audio}/edit', [AudioController::class, 'edit']);
         Route::put('{audio}', [AudioController::class, 'update']);
         Route::delete('{audio}', [AudioController::class, 'destroy']);
+
+        Route::get('{audio}/topics', [AudioTopicController::class, 'index']);
+        Route::post('{audio}/topics', [AudioTopicController::class, 'store']);
     });
 
     Route::prefix('/topics')->group(function () {

@@ -17,7 +17,7 @@ class TopicFactory extends Factory
     {
         return [
             'title'    => $this->faker->sentence(),
-            'time'     => $this->faker->time('i:s'),
+            'time'     => $this->faker->randomFloat(null, 1.0, 3599),
             'user_id'  => User::all()->random()->id,
             'audio_id' => Audio::all()->random()->id,
         ];

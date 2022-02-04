@@ -54,7 +54,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{ topic.time }}
+                                                            {{ formatSeconds(topic.time) }}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -62,7 +62,12 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{ topic.audio.title }}
+                                                            <Link
+                                                                title="GO TO"
+                                                                :href="`/audios/${topic.audio.id}/topics`"
+                                                                class="text-indigo-600 hover:text-indigo-900 mr-6">
+                                                                {{ topic.audio.title }}
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -113,5 +118,10 @@ let search = ref(props.filters.search);
 watch(search, debounce(function (value) {
     Inertia.get('/topics', { search: value }, { preserveState: true, replace: true });
 }, 300));
+
+let formatSeconds = (seconds) => {
+    if (isNaN(seconds)) seconds = 0;
+    return new Date(seconds * 1000).toISOString().substr(11, 8);
+}
 </script>
 

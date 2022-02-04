@@ -15,7 +15,7 @@ class AudioFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'path'  => $this->faker->filePath(),
+            'path'  => '/storage/audios/test.mp3',
         ];
     }
 }

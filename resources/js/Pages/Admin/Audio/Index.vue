@@ -47,7 +47,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            <Link :href="`/audios/${audio.id}`"
+                                                            <Link :href="`/audios/${audio.id}/topics`"
                                                                   title="GO TO"
                                                                   class="text-indigo-600 hover:text-indigo-900">
                                                                 {{ audio.title }}
