@@ -30,9 +30,20 @@ class AudioController extends Controller
         return Inertia::render('Admin/Audio/Create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        //
+        Request::validate([
+            'title' => 'required|string',
+            'audio' => 'required|mimes:mp3',
+        ]);
+
+        $audio        = new Audio;
+        $audio->path  = Request::file('audio')->storePublicly("public/audios");
+        $audio->title = Request::input('title');
+
+        $audio->save();
+
+        return back()->with('message', 'Added successfully!');
     }
 
     public function edit(Audio $audio)
@@ -43,7 +54,7 @@ class AudioController extends Controller
     public function update(Audio $audio)
     {
         Request::validate([
-            'title' => 'required',
+            'title' => 'required|string',
             'audio' => 'nullable|mimes:mp3',
         ]);
 

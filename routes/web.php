@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/audios')->group(function () {
         Route::get('', [AudioController::class, 'index'])->name('audios');
         Route::get('create', [AudioController::class, 'create']);
+        Route::post('', [AudioController::class, 'store']);
         Route::get('{audio}/edit', [AudioController::class, 'edit']);
         Route::put('{audio}', [AudioController::class, 'update']);
         Route::delete('{audio}', [AudioController::class, 'destroy']);

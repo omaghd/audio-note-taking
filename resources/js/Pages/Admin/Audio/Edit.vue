@@ -15,11 +15,11 @@
                         <form @submit.prevent="submit" class="max-w-md mx-auto mt-8" enctype="multipart/form-data">
                             <div
                                 v-if="$page.props.flash.message && !processing"
-                                class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mb-6"
+                                class="bg-indigo-100 border-t-4 border-indigo-500 rounded-b text-indigo-900 px-4 py-3 shadow-md mb-6"
                                 role="alert">
                                 <div class="flex">
                                     <div class="py-1">
-                                        <svg class="fill-current h-6 w-6 text-teal-500 mr-4"
+                                        <svg class="fill-current h-6 w-6 text-indigo-500 mr-4"
                                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                             <path
                                                 d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/>
@@ -60,7 +60,7 @@
 
                             <div class="mb-6">
                                 <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-teal-700 hover:bg-teal-600 transition ease-in-out duration-150"
+                                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-700 hover:bg-indigo-600 transition ease-in-out duration-150"
                                         :class="{'cursor-not-allowed': processing}"
                                         :disabled="processing">
                                     <svg
