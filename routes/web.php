@@ -7,15 +7,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('audios');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-
-    Route::prefix('/audios')->group(function () {
+Route::middleware(['auth'])->group(function () {    Route::prefix('/audios')->group(function () {
         Route::get('', [AudioController::class, 'index'])->name('audios');
         Route::get('create', [AudioController::class, 'create']);
         Route::post('', [AudioController::class, 'store']);

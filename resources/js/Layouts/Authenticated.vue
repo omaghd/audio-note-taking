@@ -8,17 +8,13 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('audios')">
                                     <BreezeApplicationLogo class="block h-9 w-auto"/>
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </BreezeNavLink>
-
                                 <BreezeNavLink :href="route('audios')" :active="route().current('audios')">
                                     Audios
                                 </BreezeNavLink>
@@ -81,8 +77,12 @@
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}"
                      class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <BreezeResponsiveNavLink :href="route('audios')" :active="route().current('audios')">
+                            Audios
+                        </BreezeResponsiveNavLink>
+
+                        <BreezeResponsiveNavLink :href="route('topics')" :active="route().current('topics')">
+                            Topics
                         </BreezeResponsiveNavLink>
                     </div>
 
@@ -123,7 +123,7 @@ import BreezeDropdown from '@/Components/Dropdown.vue'
 import BreezeDropdownLink from '@/Components/DropdownLink.vue'
 import BreezeNavLink from '@/Components/NavLink.vue'
 import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
-import {Link} from '@inertiajs/inertia-vue3';
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     components: {
