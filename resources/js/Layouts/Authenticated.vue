@@ -22,6 +22,12 @@
                                 <BreezeNavLink :href="route('topics')" :active="route().current('topics')">
                                     Topics
                                 </BreezeNavLink>
+
+                                <BreezeNavLink v-if="$page.props.auth.user.is_admin"
+                                               :href="route('users')"
+                                               :active="route().current('users')">
+                                    Users
+                                </BreezeNavLink>
                             </div>
                         </div>
 
@@ -83,6 +89,12 @@
 
                         <BreezeResponsiveNavLink :href="route('topics')" :active="route().current('topics')">
                             Topics
+                        </BreezeResponsiveNavLink>
+
+                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.is_admin"
+                                                 :href="route('users')"
+                                                 :active="route().current('users')">
+                            Users
                         </BreezeResponsiveNavLink>
                     </div>
 
