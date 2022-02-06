@@ -35,7 +35,7 @@
 
                             <div class="mb-6">
                                 <audio id="audio" controls class="flex mb-3 m-auto"
-                                       :src="audio.path">
+                                       :src="`${route('root')}${audio.path}`">
                                 </audio>
 
                                 <section class="flex justify-between">
@@ -190,7 +190,7 @@
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link :href="`/topics/${topic.id}`"
+                                                    <Link :href="route('topics.destroy', topic.id)"
                                                           preserve-scroll
                                                           method="delete"
                                                           class="text-indigo-600 hover:text-indigo-900">
@@ -235,7 +235,7 @@ let form = useForm({
 });
 
 let submit = () => {
-    form.post(`/audios/${props.audio.id}/topics`, {
+    form.post(route('audios.topics', props.audio.id), {
         onStart:        () => {
             processing.value = true;
         },

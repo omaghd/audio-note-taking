@@ -64,7 +64,7 @@
                                                         <div class="text-sm font-medium text-gray-900">
                                                             <Link
                                                                 title="GO TO"
-                                                                :href="`/audios/${topic.audio.id}/topics`"
+                                                                :href="this.route('audios.topics', topic.audio.id)"
                                                                 class="text-indigo-600 hover:text-indigo-900 mr-6">
                                                                 {{ topic.audio.title }}
                                                             </Link>
@@ -81,7 +81,8 @@
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link :href="`/topics/${topic.id}`" method="delete"
+                                                    <Link :href="this.route('topics.destroy', topic.id)"
+                                                          method="delete"
                                                           class="text-indigo-600 hover:text-indigo-900">
                                                         Delete
                                                     </Link>
@@ -116,7 +117,7 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, debounce(function (value) {
-    Inertia.get('/topics', { search: value }, { preserveState: true, replace: true });
+    Inertia.get(route('topics'), { search: value }, { preserveState: true, replace: true });
 }, 300));
 
 let formatSeconds = (seconds) => {

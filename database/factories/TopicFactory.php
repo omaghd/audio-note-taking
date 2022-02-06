@@ -16,7 +16,7 @@ class TopicFactory extends Factory
     public function definition()
     {
         return [
-            'title'    => $this->faker->sentence(),
+            'title'    => $this->faker->sentence(4),
             'time'     => $this->faker->randomFloat(null, 1.0, 3599),
             'user_id'  => User::all()->random()->id,
             'audio_id' => Audio::all()->random()->id,

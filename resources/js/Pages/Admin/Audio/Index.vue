@@ -15,7 +15,7 @@
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <Link
-                                    href="/audios/create"
+                                    :href="this.route('audios.create')"
                                     class="px-4 py-1 text-sm text-indigo-600 font-semibold rounded-full border border-indigo-200 hover:text-white hover:bg-indigo-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
                                     New Audio
                                 </Link>
@@ -47,7 +47,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            <Link :href="`/audios/${audio.id}/topics`"
+                                                            <Link :href="this.route('audios.topics', audio.id)"
                                                                   title="GO TO"
                                                                   class="text-indigo-600 hover:text-indigo-900">
                                                                 {{ audio.title }}
@@ -65,12 +65,13 @@
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link :href="`/audios/${audio.id}/edit`"
+                                                    <Link :href="this.route('audios.edit', audio.id)"
                                                           class="text-indigo-600 hover:text-indigo-900 mr-6">
                                                         Edit
                                                     </Link>
 
-                                                    <Link :href="`/audios/${audio.id}`" method="delete"
+                                                    <Link :href="this.route('audios.destroy', audio.id)"
+                                                          method="delete"
                                                           class="text-indigo-600 hover:text-indigo-900">
                                                         Delete
                                                     </Link>
@@ -105,7 +106,7 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, debounce(function (value) {
-    Inertia.get('/audios', { search: value }, { preserveState: true, replace: true });
+    Inertia.get(route('audios'), { search: value }, { preserveState: true, replace: true });
 }, 300));
 </script>
 

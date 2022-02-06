@@ -102,7 +102,7 @@ let form = useForm({
 });
 
 let submit = () => {
-    Inertia.post(`/audios/${props.audio.id}`, {
+    Inertia.post(route('audios.update', props.audio.id), {
         _method: 'put',
         title:   form.title,
         audio:   form.audio,

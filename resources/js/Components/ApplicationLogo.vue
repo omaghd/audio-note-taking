@@ -1,3 +1,3 @@
 <template>
-    <img src="/imgs/logo.png" alt="Logo">
+    <img :src="`${route('root')}/imgs/logo.png`" alt="Logo">
 </template>

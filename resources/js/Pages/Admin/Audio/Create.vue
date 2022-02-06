@@ -106,7 +106,7 @@ let changeAudio = (event) => {
 }
 
 let submit = () => {
-    form.post('/audios', {
+    form.post(route('audios'), {
         onStart:   () => {
             processing.value = true;
         },
