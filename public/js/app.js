@@ -21130,6 +21130,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , _hoisted_12)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "border border-gray-400 rounded p-2 w-full",
         type: "file",
+        accept: "audio/mpeg",
         onInput: _cache[1] || (_cache[1] = function ($event) {
           return $setup.form.audio = $event.target.files[0];
         }),
@@ -21322,6 +21323,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , _hoisted_12)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "border border-gray-400 rounded p-2 w-full",
         type: "file",
+        accept: "audio/mpeg",
         onInput: _cache[1] || (_cache[1] = function ($event) {
           return $setup.form.audio = $event.target.files[0];
         }),

@@ -52,6 +52,7 @@
 
                                 <input class="border border-gray-400 rounded p-2 w-full"
                                        type="file"
+                                       accept="audio/mpeg"
                                        @input="form.audio = $event.target.files[0]"
                                        @change="changeAudio"
                                        name="audio" id="audio"/>
