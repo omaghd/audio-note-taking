@@ -15,6 +15,7 @@
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <Link
+                                    v-if="$page.props.auth.user.is_admin"
                                     :href="this.route('audios.create')"
                                     class="px-4 py-1 text-sm text-indigo-600 font-semibold rounded-full border border-indigo-200 hover:text-white hover:bg-indigo-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
                                     New Audio
@@ -36,7 +37,9 @@
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Topics
                                                 </th>
-                                                <th scope="col" class="relative px-6 py-3">
+                                                <th
+                                                    v-if="$page.props.auth.user.is_admin"
+                                                    scope="col" class="relative px-6 py-3">
                                                     <span class="sr-only">Options</span>
                                                 </th>
                                             </tr>
@@ -64,7 +67,9 @@
                                                     </div>
                                                 </td>
 
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td
+                                                    v-if="$page.props.auth.user.is_admin"
+                                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link :href="this.route('audios.edit', audio.id)"
                                                           class="text-indigo-600 hover:text-indigo-900 mr-6">
                                                         Edit

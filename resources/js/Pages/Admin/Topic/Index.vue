@@ -81,9 +81,11 @@
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link :href="this.route('topics.destroy', topic.id)"
-                                                          method="delete"
-                                                          class="text-indigo-600 hover:text-indigo-900">
+                                                    <Link
+                                                        v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
+                                                        :href="this.route('topics.destroy', topic.id)"
+                                                        method="delete"
+                                                        class="text-indigo-600 hover:text-indigo-900">
                                                         Delete
                                                     </Link>
                                                 </td>
