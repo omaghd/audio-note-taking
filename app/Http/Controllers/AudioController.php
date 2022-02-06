@@ -38,7 +38,8 @@ class AudioController extends Controller
         ]);
 
         $audio        = new Audio;
-        $audio->path  = Request::file('audio')->storePublicly("public/audios");
+        $file         = Request::file('audio');
+        $audio->path  = $file->storePubliclyAs("public/audios", $file->getClientOriginalName());
         $audio->title = Request::input('title');
 
         $audio->save();
@@ -58,9 +59,10 @@ class AudioController extends Controller
             'audio' => 'nullable|mimes:mp3',
         ]);
 
-        if (Request::hasFile('audio'))
-            $audio->path = Request::file('audio')->storePublicly("public/audios");
-
+        if (Request::hasFile('audio')) {
+            $file        = Request::file('audio');
+            $audio->path = $file->storePubliclyAs("public/audios", $file->getClientOriginalName());
+        }
         $audio->title = Request::input('title');
 
         $audio->save();
