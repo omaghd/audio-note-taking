@@ -4,6 +4,7 @@ use App\Http\Controllers\AudioController;
 use App\Http\Controllers\AudioTopicController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserTopicController;
 use App\Models\Topic;
 use Illuminate\Support\Facades\Route;
 
@@ -34,13 +35,17 @@ Route::middleware(['auth'])->group(function () {
             ->can('delete-topic', 'topic');
     });
 
-    Route::group(['prefix' => '/users', 'middleware' => ['can:is-admin']], function () {
-        Route::get('', [UserController::class, 'index'])->name('users');
-        Route::get('create', [UserController::class, 'create'])->name('users.create');
-        Route::post('', [UserController::class, 'store']);
-        Route::get('{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-        Route::put('{user}', [UserController::class, 'update'])->name('users.update');
-        Route::delete('{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::prefix('/users')->group(function () {
+        Route::middleware(['can:is-admin'])->group(function () {
+            Route::get('', [UserController::class, 'index'])->name('users');
+            Route::get('create', [UserController::class, 'create'])->name('users.create');
+            Route::post('', [UserController::class, 'store']);
+            Route::get('{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+            Route::put('{user}', [UserController::class, 'update'])->name('users.update');
+            Route::delete('{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        });
+
+        Route::get('{user}/topics', UserTopicController::class)->name('users.topics');
     });
 });
 

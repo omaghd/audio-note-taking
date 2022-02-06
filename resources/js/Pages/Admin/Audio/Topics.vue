@@ -184,7 +184,11 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{ topic.user.name }}
+                                                            <Link :href="this.route('users.topics', topic.user.id)"
+                                                                  title="See all topics"
+                                                                  class="text-indigo-600 hover:text-indigo-900">
+                                                                {{ topic.user.name }}
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -222,7 +226,6 @@ let audioElement;
 
 let props = defineProps({
     audio:      Object,
-    topics:     Object,
     errors:     Object,
     processing: Boolean
 });
