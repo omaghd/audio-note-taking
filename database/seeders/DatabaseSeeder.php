@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create([
-                         'name'     => 'Omar EL ATMANI',
-                         'email'    => 'omar@omar',
-                         'password' => Hash::make('omar@omar'),
-
-                     ]);
+            'name'     => 'Omar EL ATMANI',
+            'email'    => 'omar@omar',
+            'password' => Hash::make('omar@omar'),
+            'is_admin' => 1,
+        ]);
         User::factory(2)->create();
         Audio::factory(10)->create();
         Topic::factory(200)->create();
