@@ -21789,7 +21789,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "audio",
         controls: "",
         "class": "flex mb-3 m-auto",
-        src: "".concat(_ctx.route('root')).concat($props.audio.path)
+        src: "".concat(_ctx.route('root')).concat($props.audio.path.replace('public', '/storage'))
       }, null, 8
       /* PROPS */
       , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {

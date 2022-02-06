@@ -35,7 +35,7 @@
 
                             <div class="mb-6">
                                 <audio id="audio" controls class="flex mb-3 m-auto"
-                                       :src="`${route('root')}${audio.path}`">
+                                       :src="`${route('root')}${audio.path.replace('public', '/storage')}`">
                                 </audio>
 
                                 <section class="flex justify-between">
