@@ -16,7 +16,7 @@ class TopicController extends Controller
                 })
                 ->with(['user', 'audio'])
                 ->latest()
-                ->paginate(5)
+                ->paginate(10)
                 ->withQueryString(),
 
             'filters' => request()->only(['search'])

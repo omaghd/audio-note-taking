@@ -20,7 +20,7 @@ class UserController extends Controller
                 ->without(['topics'])
                 ->withCount('topics')
                 ->latest()
-                ->paginate(5)
+                ->paginate(10)
                 ->withQueryString(),
 
             'filters' => request()->only(['search'])
