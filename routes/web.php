@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::middleware(['can:is-admin'])->group(function () {
             Route::patch('{topic}/done', [TopicController::class, 'done'])->name('topics.done');
             Route::patch('{topic}/undone', [TopicController::class, 'undone'])->name('topics.undone');
+            Route::patch('{topicId}/restore', [TopicController::class, 'restore'])->name('topics.restore');
         });
     });
 

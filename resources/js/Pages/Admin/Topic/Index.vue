@@ -21,6 +21,7 @@
                             <Link
                                 title="GO TO"
                                 :href="this.route('topics')"
+                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl === '/topics' || currentUrl.startsWith(`/topics?search`)}"
                                 class="hover:text-gray-900">
                                 All topics
@@ -29,6 +30,7 @@
                             <Link
                                 title="GO TO"
                                 :href="this.route('topics', { done: 1 })"
+                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith('/topics?done=1')}"
                                 class="hover:text-gray-900">
                                 Done topics
@@ -37,9 +39,20 @@
                             <Link
                                 title="GO TO"
                                 :href="this.route('topics', { undone: 1 })"
+                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith('/topics?undone=1')}"
                                 class="hover:text-gray-900">
                                 Undone topics
+                            </Link>
+                            <span v-if="$page.props.auth.user.is_admin">|</span>
+                            <Link
+                                v-if="$page.props.auth.user.is_admin"
+                                title="GO TO"
+                                :href="this.route('topics', { trash: 1 })"
+                                preserveScroll
+                                :class="{'font-bold text-gray-800' : currentUrl.startsWith('/topics?trash=1')}"
+                                class="hover:text-gray-900">
+                                Trash
                             </Link>
                         </div>
 
@@ -115,13 +128,26 @@
                                                     </td>
 
                                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <Link
-                                                            v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
-                                                            :href="this.route('topics.destroy', topic.id)"
-                                                            method="delete"
-                                                            class="text-indigo-600 hover:text-indigo-900">
-                                                            Delete
-                                                        </Link>
+                                                        <div
+                                                            v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin">
+                                                            <Link
+                                                                v-if="topic.deleted_at"
+                                                                :href="this.route('topics.restore', topic.id)"
+                                                                preserveScroll
+                                                                method="patch"
+                                                                class="text-indigo-600 hover:text-indigo-900">
+                                                                Restore
+                                                            </Link>
+                                                            <Link
+                                                                v-else
+                                                                :href="this.route('topics.destroy', topic.id)"
+                                                                preserveScroll
+                                                                method="delete"
+                                                                class="text-indigo-600 hover:text-indigo-900">
+                                                                Delete
+                                                            </Link>
+                                                        </div>
+
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -169,6 +195,8 @@ const query = computed(() => {
         return { done: 1 };
     else if (currentUrl.value.startsWith('/topics?undone'))
         return { undone: 1 };
+    else if (currentUrl.value.startsWith('/topics?trash'))
+        return { trash: 1 };
     return {};
 });
 </script>

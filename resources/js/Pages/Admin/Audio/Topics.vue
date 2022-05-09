@@ -208,7 +208,7 @@
 
                                                     <td class="px-6 py-4 space-x-3 whitespace-nowrap text-right text-sm font-medium">
                                                         <Link
-                                                            v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
+                                                            v-if="(topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin) && $page.props.auth.user.is_admin"
                                                             :href="topic.is_done ? route('topics.undone', topic.id) : route('topics.done', topic.id)"
                                                             preserve-scroll
                                                             method="patch"
