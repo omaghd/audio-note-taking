@@ -122,6 +122,29 @@
                             </div>
                         </form>
 
+                        <div class="flex space-x-2 select-none text-sm text-gray-400 mb-6">
+                            <button
+                                @click.prevent="getAll"
+                                :class="{'font-bold text-gray-800' : currentUrl === `/audios/${audio.id}/topics`}"
+                                class="hover:text-gray-900 uppercase">
+                                All topics
+                            </button>
+                            <span>|</span>
+                            <button
+                                @click.prevent="getDoneTopics"
+                                :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/audios/${audio.id}/topics?done=1`)}"
+                                class="hover:text-gray-900 uppercase">
+                                Done topics
+                            </button>
+                            <span>|</span>
+                            <button
+                                @click.prevent="getUndoneTopics"
+                                :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/audios/${audio.id}/topics?undone=1`)}"
+                                class="hover:text-gray-900 uppercase">
+                                Undone topics
+                            </button>
+                        </div>
+
                         <div class="flex flex-col">
                             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -217,8 +240,9 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3'
-import { onMounted, ref } from "vue";
+import { useForm, usePage } from '@inertiajs/inertia-vue3'
+import { computed, onMounted, ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 const processing = ref(false);
 let audioElement;
@@ -281,5 +305,31 @@ let goTo = (seconds) => {
 let formatSeconds = (seconds) => {
     if (isNaN(seconds)) seconds = 0;
     return new Date(seconds * 1000).toISOString().substr(11, 8);
+}
+
+const currentUrl = computed(() => usePage().url.value);
+
+const getAll = () => {
+    Inertia.get(route('audios.topics', { audio: props.audio.id }), {}, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+    });
+}
+
+const getDoneTopics = () => {
+    Inertia.get(route('audios.topics', { audio: props.audio.id, done: 1 }), {}, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+    });
+}
+
+const getUndoneTopics = () => {
+    Inertia.get(route('audios.topics', { audio: props.audio.id, undone: 1 }), {}, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+    });
 }
 </script>

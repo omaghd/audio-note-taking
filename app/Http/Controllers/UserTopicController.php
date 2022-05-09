@@ -13,6 +13,12 @@ class UserTopicController extends Controller
         return Inertia::render('Admin/User/Topics', [
             'user'   => $user,
             'topics' => Topic::query()
+                ->when(request()->input('done'), function ($query) {
+                    $query->where('is_done', 1);
+                })
+                ->when(request()->input('undone'), function ($query) {
+                    $query->where('is_done', 0);
+                })
                 ->when(request()->input('search'), function ($query, $search) {
                     $query->where('title', 'like', "%{$search}%");
                 })
@@ -23,7 +29,7 @@ class UserTopicController extends Controller
                 ->paginate(10)
                 ->withQueryString(),
 
-            'filters' => request()->only(['search'])
+            'filters' => request()->only(['search', 'done', 'undone'])
         ]);
     }
 }

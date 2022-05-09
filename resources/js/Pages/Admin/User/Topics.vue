@@ -17,6 +17,35 @@
                                    class="border px-2 rounded-lg" />
                         </div>
 
+                        <div class="flex uppercase space-x-2 select-none text-sm text-gray-400 mb-6">
+                            <Link
+                                title="GO TO"
+                                :href="this.route('users.topics', { user: user.id })"
+                                preserveScroll
+                                :class="{'font-bold text-gray-800' : currentUrl === `/users/${user.id}/topics` || currentUrl.startsWith(`/users/${user.id}/topics?search`)}"
+                                class="hover:text-gray-900">
+                                All topics
+                            </Link>
+                            <span>|</span>
+                            <Link
+                                title="GO TO"
+                                :href="this.route('users.topics', { user: user.id, done: 1 })"
+                                preserveScroll
+                                :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/users/${user.id}/topics?done=1`)}"
+                                class="hover:text-gray-900">
+                                Done topics
+                            </Link>
+                            <span>|</span>
+                            <Link
+                                title="GO TO"
+                                :href="this.route('users.topics', { user: user.id, undone: 1 })"
+                                preserveScroll
+                                :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/users/${user.id}/topics?undone=1`)}"
+                                class="hover:text-gray-900">
+                                Undone topics
+                            </Link>
+                        </div>
+
                         <div class="flex flex-col">
                             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -101,9 +130,10 @@
 
 <script setup>
 import Pagination from '@/Shared/Pagination';
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
+import { usePage } from "@inertiajs/inertia-vue3";
 
 let props = defineProps({
     user: Object,
@@ -114,11 +144,27 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, debounce(function (value) {
-    Inertia.get(route('users.topics', props.user.id), { search: value }, { preserveState: true, replace: true });
+    Inertia.get(route('users.topics', {
+            user: props.user.id,
+            done: query.value.done,
+            undone: query.value.undone
+        }),
+        { search: value },
+        { preserveState: true, replace: true });
 }, 300));
 
 let formatSeconds = (seconds) => {
     if (isNaN(seconds)) seconds = 0;
     return new Date(seconds * 1000).toISOString().substr(11, 8);
 }
+
+const currentUrl = computed(() => usePage().url.value);
+
+const query = computed(() => {
+    if (currentUrl.value.startsWith(`/users/${props.user.id}/topics?done`))
+        return { done: 1 };
+    else if (currentUrl.value.startsWith(`/users/${props.user.id}/topics?undone`))
+        return { undone: 1 };
+    return {};
+});
 </script>

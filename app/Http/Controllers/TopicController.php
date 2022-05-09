@@ -11,6 +11,12 @@ class TopicController extends Controller
     {
         return Inertia::render('Admin/Topic/Index', [
             'topics' => Topic::query()
+                ->when(request()->input('done'), function ($query) {
+                    $query->where('is_done', 1);
+                })
+                ->when(request()->input('undone'), function ($query) {
+                    $query->where('is_done', 0);
+                })
                 ->when(request()->input('search'), function ($query, $search) {
                     $query->where('title', 'like', "%{$search}%");
                 })
