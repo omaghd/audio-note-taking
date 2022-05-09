@@ -19,6 +19,8 @@ class CreateTopicsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('time');
+            $table->boolean('is_done')->default(0);
+            $table->dateTime('done_at')->nullable();
 
             $table->foreignIdFor(Audio::class, 'audio_id')
                 ->constrained()

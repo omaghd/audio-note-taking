@@ -146,10 +146,13 @@
 
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in audio.topics" :key="topic.id">
-                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                    <td class="px-6 py-4 whitespace-nowrap"
+                                                        :class="{'border-l-4 border-green-600': topic.is_done}">
                                                         <div class="flex items-center">
-                                                            <div class="text-sm font-medium text-gray-900">
+                                                            <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
+                                                                <p v-if="topic.done_at" class="text-xs text-gray-400">
+                                                                    DONE AT: {{ topic.done_at }}</p>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -180,7 +183,16 @@
                                                         </div>
                                                     </td>
 
-                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <td class="px-6 py-4 space-x-3 whitespace-nowrap text-right text-sm font-medium">
+                                                        <Link
+                                                            v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
+                                                            :href="topic.is_done ? route('topics.undone', topic.id) : route('topics.done', topic.id)"
+                                                            preserve-scroll
+                                                            method="patch"
+                                                            class="text-green-600 hover:text-indigo-900">
+                                                            {{ topic.is_done ? 'Undone' : 'Done' }}
+                                                        </Link>
+
                                                         <Link
                                                             v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
                                                             :href="route('topics.destroy', topic.id)"

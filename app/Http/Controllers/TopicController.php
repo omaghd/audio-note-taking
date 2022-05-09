@@ -28,4 +28,20 @@ class TopicController extends Controller
         $topic->delete();
         return back();
     }
+
+    public function done(Topic $topic)
+    {
+        $topic->is_done = true;
+        $topic->done_at = now();
+        $topic->save();
+        return back();
+    }
+
+    public function undone(Topic $topic)
+    {
+        $topic->is_done = false;
+        $topic->done_at = null;
+        $topic->save();
+        return back();
+    }
 }
