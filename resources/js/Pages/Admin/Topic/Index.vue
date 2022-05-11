@@ -13,45 +13,45 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="flex justify-end mb-6">
-                            <input v-model="search" type="text" placeholder="Search..."
-                                   class="border px-2 rounded-lg" />
+                            <input v-model="search" class="border px-2 rounded-lg" placeholder="Search..."
+                                   type="text" />
                         </div>
 
-                        <div class="flex uppercase space-x-2 select-none text-sm text-gray-400 mb-6">
+                        <div class="uppercase space-x-2 select-none text-sm text-gray-400 mb-6">
                             <Link
-                                title="GO TO"
-                                :href="this.route('topics')"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl === '/topics' || currentUrl.startsWith(`/topics?search`)}"
-                                class="hover:text-gray-900">
+                                :href="this.route('topics')"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 All topics
                             </Link>
                             <span>|</span>
                             <Link
-                                title="GO TO"
-                                :href="this.route('topics', { done: 1 })"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith('/topics?done=1')}"
-                                class="hover:text-gray-900">
+                                :href="this.route('topics', { done: 1 })"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 Done topics
                             </Link>
                             <span>|</span>
                             <Link
-                                title="GO TO"
-                                :href="this.route('topics', { undone: 1 })"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith('/topics?undone=1')}"
-                                class="hover:text-gray-900">
+                                :href="this.route('topics', { undone: 1 })"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 Undone topics
                             </Link>
                             <span v-if="$page.props.auth.user.is_admin">|</span>
                             <Link
                                 v-if="$page.props.auth.user.is_admin"
-                                title="GO TO"
-                                :href="this.route('topics', { trash: 1 })"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith('/topics?trash=1')}"
-                                class="hover:text-gray-900">
+                                :href="this.route('topics', { trash: 1 })"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 Trash
                             </Link>
                         </div>
@@ -75,7 +75,7 @@
                                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         User
                                                     </th>
-                                                    <th scope="col" class="relative px-6 py-3">
+                                                    <th class="relative px-6 py-3" scope="col">
                                                         <span class="sr-only">Options</span>
                                                     </th>
                                                 </tr>
@@ -83,13 +83,17 @@
 
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in topics.data" :key="topic.id">
-                                                    <td class="px-6 py-4 whitespace-nowrap"
-                                                        :class="{'border-l-4 border-green-600': topic.is_done}">
+                                                    <td :class="{'border-l-4 border-green-400': topic.is_done}"
+                                                        class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
                                                                 <p v-if="topic.done_at" class="text-xs text-gray-400">
-                                                                    DONE AT: {{ topic.done_at }}</p>
+                                                                    DONE AT: {{ topic.done_at }}
+                                                                </p>
+                                                                <p v-else class="text-xs text-gray-400">
+                                                                    <font-awesome-icon icon="minus" />
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -106,9 +110,9 @@
                                                         <div class="flex items-center">
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <Link
-                                                                    title="GO TO"
                                                                     :href="this.route('audios.topics', topic.audio.id)"
-                                                                    class="text-indigo-600 hover:text-indigo-900 mr-6">
+                                                                    class="text-sky-600 hover:text-sky-900 mr-6"
+                                                                    title="GO TO">
                                                                     {{ topic.audio.title }}
                                                                 </Link>
                                                             </div>
@@ -119,8 +123,8 @@
                                                         <div class="flex items-center">
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <Link :href="this.route('users.topics', topic.user.id)"
-                                                                      title="See all topics"
-                                                                      class="text-indigo-600 hover:text-indigo-900">
+                                                                      class="text-sky-600 hover:text-sky-900"
+                                                                      title="See all topics">
                                                                     {{ topic.user.name }}
                                                                 </Link>
                                                             </div>
@@ -133,18 +137,20 @@
                                                             <Link
                                                                 v-if="topic.deleted_at"
                                                                 :href="this.route('topics.restore', topic.id)"
-                                                                preserveScroll
+                                                                class="px-4 py-2 rounded text-green-900 bg-green-200 hover:bg-green-300"
+                                                                title="Restore"
                                                                 method="patch"
-                                                                class="text-indigo-600 hover:text-indigo-900">
-                                                                Restore
+                                                                preserveScroll>
+                                                                <font-awesome-icon icon="arrow-rotate-left" />
                                                             </Link>
                                                             <Link
                                                                 v-else
                                                                 :href="this.route('topics.destroy', topic.id)"
-                                                                preserveScroll
+                                                                class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
+                                                                title="Delete"
                                                                 method="delete"
-                                                                class="text-indigo-600 hover:text-indigo-900">
-                                                                Delete
+                                                                preserveScroll>
+                                                                <font-awesome-icon icon="trash" />
                                                             </Link>
                                                         </div>
 

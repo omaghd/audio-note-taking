@@ -13,35 +13,35 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="flex justify-end mb-6">
-                            <input v-model="search" type="text" placeholder="Search..."
-                                   class="border px-2 rounded-lg" />
+                            <input v-model="search" class="border px-2 rounded-lg" placeholder="Search..."
+                                   type="text" />
                         </div>
 
-                        <div class="flex uppercase space-x-2 select-none text-sm text-gray-400 mb-6">
+                        <div class="uppercase space-x-2 select-none text-sm text-gray-400 mb-6">
                             <Link
-                                title="GO TO"
-                                :href="this.route('users.topics', { user: user.id })"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl === `/users/${user.id}/topics` || currentUrl.startsWith(`/users/${user.id}/topics?search`)}"
-                                class="hover:text-gray-900">
+                                :href="this.route('users.topics', { user: user.id })"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 All topics
                             </Link>
                             <span>|</span>
                             <Link
-                                title="GO TO"
-                                :href="this.route('users.topics', { user: user.id, done: 1 })"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/users/${user.id}/topics?done=1`)}"
-                                class="hover:text-gray-900">
+                                :href="this.route('users.topics', { user: user.id, done: 1 })"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 Done topics
                             </Link>
                             <span>|</span>
                             <Link
-                                title="GO TO"
-                                :href="this.route('users.topics', { user: user.id, undone: 1 })"
-                                preserveScroll
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/users/${user.id}/topics?undone=1`)}"
-                                class="hover:text-gray-900">
+                                :href="this.route('users.topics', { user: user.id, undone: 1 })"
+                                class="hover:text-gray-900"
+                                preserveScroll
+                                title="GO TO">
                                 Undone topics
                             </Link>
                         </div>
@@ -62,7 +62,7 @@
                                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Audio
                                                     </th>
-                                                    <th scope="col" class="relative px-6 py-3">
+                                                    <th class="relative px-6 py-3" scope="col">
                                                         <span class="sr-only">Options</span>
                                                     </th>
                                                 </tr>
@@ -70,13 +70,17 @@
 
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in topics.data" :key="topic.id">
-                                                    <td class="px-6 py-4 whitespace-nowrap"
-                                                        :class="{'border-l-4 border-green-600': topic.is_done}">
+                                                    <td :class="{'border-l-4 border-green-400': topic.is_done}"
+                                                        class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
                                                                 <p v-if="topic.done_at" class="text-xs text-gray-400">
-                                                                    DONE AT: {{ topic.done_at }}</p>
+                                                                    DONE AT: {{ topic.done_at }}
+                                                                </p>
+                                                                <p v-else class="text-xs text-gray-400">
+                                                                    <font-awesome-icon icon="minus" />
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -94,8 +98,8 @@
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <Link
                                                                     :href="route('audios.topics', topic.audio.id)"
-                                                                    title="GO TO"
-                                                                    class="text-indigo-600 hover:text-indigo-900">
+                                                                    class="text-sky-600 hover:text-sky-900"
+                                                                    title="GO TO">
                                                                     {{ topic.audio.title }}
                                                                 </Link>
                                                             </div>
@@ -106,10 +110,10 @@
                                                         <Link
                                                             v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
                                                             :href="route('topics.destroy', topic.id)"
-                                                            preserve-scroll
+                                                            class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
                                                             method="delete"
-                                                            class="text-indigo-600 hover:text-indigo-900">
-                                                            Delete
+                                                            preserve-scroll>
+                                                            <font-awesome-icon icon="trash" />
                                                         </Link>
                                                     </td>
                                                 </tr>

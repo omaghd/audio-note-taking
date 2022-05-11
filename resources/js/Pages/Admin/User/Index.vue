@@ -1,5 +1,5 @@
 <template>
-    <Head title="Users"/>
+    <Head title="Users" />
 
     <BreezeAuthenticatedLayout>
         <template #header>
@@ -17,11 +17,12 @@
                                 <Link
                                     v-if="$page.props.auth.user.is_admin"
                                     :href="this.route('users.create')"
-                                    class="px-4 py-1 text-sm text-indigo-600 font-semibold rounded-full border border-indigo-200 hover:text-white hover:bg-indigo-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
+                                    class="px-4 py-1 text-sm text-sky-600 font-semibold rounded-full border border-sky-200 hover:text-white hover:bg-sky-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                                     New User
                                 </Link>
                             </div>
-                            <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg"/>
+                            <input v-model="search" class="border px-2 rounded-lg" placeholder="Search..."
+                                   type="text" />
                         </div>
 
                         <div class="flex flex-col">
@@ -30,87 +31,89 @@
                                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                         <table class="table-auto min-w-full divide-y divide-gray-200">
                                             <thead class="bg-gray-50">
-                                            <tr>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Name
-                                                </th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Email
-                                                </th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Role
-                                                </th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Topics
-                                                </th>
-                                                <th
-                                                    v-if="$page.props.auth.user.is_admin"
-                                                    scope="col" class="relative px-6 py-3">
-                                                    <span class="sr-only">Options</span>
-                                                </th>
-                                            </tr>
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Name
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Email
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Role
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Topics
+                                                    </th>
+                                                    <th
+                                                        v-if="$page.props.auth.user.is_admin"
+                                                        class="relative px-6 py-3" scope="col">
+                                                        <span class="sr-only">Options</span>
+                                                    </th>
+                                                </tr>
                                             </thead>
 
                                             <tbody class="bg-white divide-y divide-gray-200">
-                                            <tr v-for="user in users.data" :key="user.id">
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ user.name }}
+                                                <tr v-for="user in users.data" :key="user.id">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="text-sm font-medium text-gray-900">
+                                                                {{ user.name }}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ user.email }}
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="text-sm font-medium text-gray-900">
+                                                                {{ user.email }}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="text-sm font-medium text-gray-900">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="text-sm font-medium text-gray-900">
                                                             <span
                                                                 v-if="user.is_admin"
                                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                                 Admin
                                                             </span>
-                                                            <span
-                                                                v-else
-                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                <span
+                                                                    v-else
+                                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                                 User
                                                             </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            <Link :href="this.route('users.topics', user.id)"
-                                                                  title="See all topics"
-                                                                  class="text-indigo-600 hover:text-indigo-900">
-                                                                {{ user.topics_count }}
-                                                            </Link>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="text-sm font-medium text-gray-900">
+                                                                <Link :href="this.route('users.topics', user.id)"
+                                                                      class="text-sky-600 hover:text-sky-900"
+                                                                      title="See all topics">
+                                                                    {{ user.topics_count }}
+                                                                </Link>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link :href="this.route('users.edit', user.id)"
-                                                          class="text-indigo-600 hover:text-indigo-900 mr-6">
-                                                        Edit
-                                                    </Link>
+                                                    <td class="px-6 py-4 whitespace-nowrap space-x-3 text-right text-sm font-medium">
+                                                        <Link :href="this.route('users.edit', user.id)"
+                                                              title="Edit"
+                                                              class="px-4 py-2 rounded text-amber-900 bg-amber-200 hover:bg-amber-300">
+                                                            <font-awesome-icon icon="pen-to-square" />
+                                                        </Link>
 
-                                                    <Link :href="this.route('users.destroy', user.id)"
-                                                          method="delete"
-                                                          class="text-indigo-600 hover:text-indigo-900">
-                                                        Delete
-                                                    </Link>
-                                                </td>
-                                            </tr>
+                                                        <Link :href="this.route('users.destroy', user.id)"
+                                                              title="Delete"
+                                                              class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
+                                                              method="delete">
+                                                            <font-awesome-icon icon="trash" />
+                                                        </Link>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -133,7 +136,7 @@ import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 
 let props = defineProps({
-    users:   Object,
+    users: Object,
     filters: Object
 })
 

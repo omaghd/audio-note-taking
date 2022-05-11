@@ -5,8 +5,8 @@
             v-for="link in links"
             :href="link.url"
             v-html="link.label"
-            class="px-1"
-            :class="{ 'text-gray-500': ! link.url, 'font-bold' : link.active }"
+            class="px-1 hover:text-sky-700"
+            :class="{ 'text-gray-500': ! link.url, 'font-bold text-sky-700' : link.active }"
         />
     </div>
 </template>

@@ -12,56 +12,37 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <form @submit.prevent="submit" class="max-w-md mx-auto mt-8">
-                            <div
-                                v-if="$page.props.flash.message && !processing"
-                                class="bg-indigo-100 border-t-4 border-indigo-500 rounded-b text-indigo-900 px-4 py-3 shadow-md mb-6"
-                                role="alert">
-                                <div class="flex">
-                                    <div class="py-1">
-                                        <svg class="fill-current h-6 w-6 text-indigo-500 mr-4"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold">
-                                            {{ $page.props.flash.message }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <form class="max-w-md mx-auto mt-8" @submit.prevent="submit">
                             <div class="mb-6">
-                                <audio id="audio" controls class="flex mb-3 m-auto"
-                                       :src="`${route('root')}${audio.path.replace('public', '/storage')}`">
+                                <audio id="audio" :src="`${route('root')}${audio.path.replace('public', '/storage')}`"
+                                       class="flex mb-3 m-auto"
+                                       controls>
                                 </audio>
 
                                 <section class="flex justify-evenly">
                                     <button
+                                        class="block items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-sky-700 hover:bg-sky-600 transition ease-in-out duration-150"
+                                        title="Mark"
                                         type="button"
                                         @click="mark"
-                                        class="block items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-700 hover:bg-indigo-600 transition ease-in-out duration-150"
-                                        title="Mark"
                                     >
                                         <font-awesome-icon icon="bookmark" />
                                     </button>
 
                                     <button
-                                        type="button"
-                                        @click="forward"
                                         class="block items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-gray-700 hover:bg-gray-600 transition ease-in-out duration-150"
                                         title="Forward"
+                                        type="button"
+                                        @click="forward"
                                     >
                                         <font-awesome-icon icon="forward" />
                                     </button>
 
                                     <button
-                                        type="button"
-                                        @click="backward"
                                         class="block items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-gray-700 hover:bg-gray-600 transition ease-in-out duration-150"
                                         title="Backward"
+                                        type="button"
+                                        @click="backward"
                                     >
                                         <font-awesome-icon icon="backward" />
                                     </button>
@@ -75,12 +56,13 @@
                                     Title
                                 </label>
 
-                                <input v-model="form.title"
+                                <input id="title"
+                                       v-model="form.title"
                                        class="border border-gray-400 rounded p-2 w-full"
-                                       type="text"
-                                       name="title" id="title" />
-                                <div v-if="errors.title" v-text="errors.title"
-                                     class="text-red-500 text-xs mt-1"></div>
+                                       name="title"
+                                       required type="text" />
+                                <div v-if="errors.title" class="text-red-500 text-xs mt-1"
+                                     v-text="errors.title"></div>
                             </div>
                             <div class="mb-6">
                                 <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="time">
@@ -88,10 +70,11 @@
                                 </label>
 
                                 <div class="flex flex-wrap items-stretch w-full relative">
-                                    <input type="text"
+                                    <input id="time"
                                            v-model="form.time"
-                                           name="time" id="time"
-                                           class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border border-gray-400 rounded rounded-r-none p-2 w-full relative">
+                                           class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border border-gray-400 rounded rounded-r-none p-2 w-full relative"
+                                           name="time" required
+                                           type="text">
                                     <div class="flex -mr-px">
                                     <span
                                         class="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 border-gray-400 px-3 whitespace-no-wrap text-grey-dark text-sm">
@@ -100,47 +83,48 @@
                                     </div>
                                 </div>
 
-                                <div v-if="errors.time" v-text="errors.time" class="text-red-500 text-xs mt-1"></div>
+                                <div v-if="errors.time" class="text-red-500 text-xs mt-1" v-text="errors.time"></div>
                             </div>
 
                             <div class="mb-6">
-                                <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-700 hover:bg-indigo-600 transition ease-in-out duration-150"
-                                        :class="{'cursor-not-allowed': processing}"
-                                        :disabled="processing">
+                                <button :class="{'cursor-not-allowed': processing}"
+                                        :disabled="processing"
+                                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-sky-700 hover:bg-sky-600 transition ease-in-out duration-150"
+                                        type="submit">
                                     <svg
                                         v-if="processing"
                                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                                 stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor"
-                                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        <path class="opacity-75"
+                                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                              fill="currentColor"></path>
                                     </svg>
                                     Create
                                 </button>
                             </div>
                         </form>
 
-                        <div class="flex space-x-2 select-none text-sm text-gray-400 mb-6">
+                        <div class="space-x-2 select-none text-sm text-gray-400 mb-6">
                             <button
-                                @click.prevent="getAll"
                                 :class="{'font-bold text-gray-800' : currentUrl === `/audios/${audio.id}/topics`}"
-                                class="hover:text-gray-900 uppercase">
+                                class="hover:text-gray-900 uppercase"
+                                @click.prevent="getAll">
                                 All topics
                             </button>
                             <span>|</span>
                             <button
-                                @click.prevent="getDoneTopics"
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/audios/${audio.id}/topics?done=1`)}"
-                                class="hover:text-gray-900 uppercase">
+                                class="hover:text-gray-900 uppercase"
+                                @click.prevent="getDoneTopics">
                                 Done topics
                             </button>
                             <span>|</span>
                             <button
-                                @click.prevent="getUndoneTopics"
                                 :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/audios/${audio.id}/topics?undone=1`)}"
-                                class="hover:text-gray-900 uppercase">
+                                class="hover:text-gray-900 uppercase"
+                                @click.prevent="getUndoneTopics">
                                 Undone topics
                             </button>
                         </div>
@@ -161,7 +145,7 @@
                                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         User
                                                     </th>
-                                                    <th scope="col" class="relative px-6 py-3">
+                                                    <th class="relative px-6 py-3" scope="col">
                                                         <span class="sr-only">Options</span>
                                                     </th>
                                                 </tr>
@@ -169,13 +153,17 @@
 
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in audio.topics" :key="topic.id">
-                                                    <td class="px-6 py-4 whitespace-nowrap"
-                                                        :class="{'border-l-4 border-green-600': topic.is_done}">
+                                                    <td :class="{'border-l-4 border-green-400': topic.is_done}"
+                                                        class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
                                                                 <p v-if="topic.done_at" class="text-xs text-gray-400">
-                                                                    DONE AT: {{ topic.done_at }}</p>
+                                                                    DONE AT: {{ topic.done_at }}
+                                                                </p>
+                                                                <p v-else class="text-xs text-gray-400">
+                                                                    <font-awesome-icon icon="minus" />
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -184,10 +172,10 @@
                                                         <div class="flex items-center">
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <a
+                                                                    class="text-sky-600 hover:text-sky-900 mr-6"
                                                                     href="#audio"
                                                                     title="GO TO"
-                                                                    @click="goTo(topic.time)"
-                                                                    class="text-indigo-600 hover:text-indigo-900 mr-6">
+                                                                    @click="goTo(topic.time)">
                                                                     {{ formatSeconds(topic.time) }}
                                                                 </a>
                                                             </div>
@@ -198,8 +186,8 @@
                                                         <div class="flex items-center">
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <Link :href="this.route('users.topics', topic.user.id)"
-                                                                      title="See all topics"
-                                                                      class="text-indigo-600 hover:text-indigo-900">
+                                                                      class="text-sky-600 hover:text-sky-900"
+                                                                      title="See all topics">
                                                                     {{ topic.user.name }}
                                                                 </Link>
                                                             </div>
@@ -209,20 +197,28 @@
                                                     <td class="px-6 py-4 space-x-3 whitespace-nowrap text-right text-sm font-medium">
                                                         <Link
                                                             v-if="(topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin) && $page.props.auth.user.is_admin"
+                                                            :class="{
+                                                                'text-sky-900 bg-sky-200 hover:bg-sky-300': topic.is_done,
+                                                                'text-green-900 bg-green-200 hover:bg-green-300': !topic.is_done,
+                                                            }"
                                                             :href="topic.is_done ? route('topics.undone', topic.id) : route('topics.done', topic.id)"
-                                                            preserve-scroll
+                                                            :title="topic.is_done ? 'Mark as undone' : 'Mark as Done'"
+                                                            class="px-4 py-2 rounded"
                                                             method="patch"
-                                                            class="text-green-600 hover:text-indigo-900">
-                                                            {{ topic.is_done ? 'Undone' : 'Done' }}
+                                                            preserve-scroll>
+                                                            <font-awesome-icon v-if="topic.is_done"
+                                                                               icon="square-xmark" />
+                                                            <font-awesome-icon v-else icon="square-check" />
                                                         </Link>
 
                                                         <Link
                                                             v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
                                                             :href="route('topics.destroy', topic.id)"
-                                                            preserve-scroll
+                                                            title="Delete"
+                                                            class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
                                                             method="delete"
-                                                            class="text-indigo-600 hover:text-indigo-900">
-                                                            Delete
+                                                            preserve-scroll>
+                                                            <font-awesome-icon icon="trash" />
                                                         </Link>
                                                     </td>
                                                 </tr>
@@ -241,8 +237,9 @@
 
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3'
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
+import { useToast } from "vue-toastification";
 
 const processing = ref(false);
 let audioElement;
@@ -252,6 +249,8 @@ let props = defineProps({
     errors: Object,
     processing: Boolean
 });
+
+const toast = useToast();
 
 onMounted(() => {
     audioElement = document.querySelector('#audio');
@@ -270,6 +269,7 @@ let submit = () => {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
+            toast.success('Created successfully!', { timeout: 2500 });
         },
         onFinish: () => {
             processing.value = false;

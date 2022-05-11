@@ -3,12 +3,14 @@ require('./bootstrap');
 import { createApp, h } from 'vue';
 import { createInertiaApp, Head, Link } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import { library } from "@fortawesome/fontawesome-svg-core";
+import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { dom } from "@fortawesome/fontawesome-svg-core";
+
+import Toast from "vue-toastification";
 
 library.add(fas);
 dom.watch();
@@ -21,6 +23,7 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
+            .use(Toast)
             .mixin({ methods: { route } })
             .component('Head', Head)
             .component('Link', Link)
@@ -30,4 +33,4 @@ createInertiaApp({
     },
 });
 
-InertiaProgress.init({ color: '#4B5563' });
+InertiaProgress.init({ color: '#38bdf8' });

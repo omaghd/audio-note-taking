@@ -1,5 +1,5 @@
 <template>
-    <Head title="Audios"/>
+    <Head title="Audios" />
 
     <BreezeAuthenticatedLayout>
         <template #header>
@@ -17,11 +17,12 @@
                                 <Link
                                     v-if="$page.props.auth.user.is_admin"
                                     :href="this.route('audios.create')"
-                                    class="px-4 py-1 text-sm text-indigo-600 font-semibold rounded-full border border-indigo-200 hover:text-white hover:bg-indigo-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
+                                    class="px-4 py-1 text-sm text-sky-600 font-semibold rounded-full border border-sky-200 hover:text-white hover:bg-sky-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                                     New Audio
                                 </Link>
                             </div>
-                            <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg"/>
+                            <input v-model="search" class="border px-2 rounded-lg" placeholder="Search..."
+                                   type="text" />
                         </div>
 
                         <div class="flex flex-col">
@@ -30,58 +31,60 @@
                                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                         <table class="table-auto min-w-full divide-y divide-gray-200">
                                             <thead class="bg-gray-50">
-                                            <tr>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Title
-                                                </th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Topics
-                                                </th>
-                                                <th
-                                                    v-if="$page.props.auth.user.is_admin"
-                                                    scope="col" class="relative px-6 py-3">
-                                                    <span class="sr-only">Options</span>
-                                                </th>
-                                            </tr>
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Title
+                                                    </th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Topics
+                                                    </th>
+                                                    <th
+                                                        v-if="$page.props.auth.user.is_admin"
+                                                        class="relative px-6 py-3" scope="col">
+                                                        <span class="sr-only">Options</span>
+                                                    </th>
+                                                </tr>
                                             </thead>
 
                                             <tbody class="bg-white divide-y divide-gray-200">
-                                            <tr v-for="audio in audios.data" :key="audio.id">
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            <Link :href="this.route('audios.topics', audio.id)"
-                                                                  title="GO TO"
-                                                                  class="text-indigo-600 hover:text-indigo-900">
-                                                                {{ audio.title }}
-                                                            </Link>
+                                                <tr v-for="audio in audios.data" :key="audio.id">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="text-sm font-medium text-gray-900">
+                                                                <Link :href="this.route('audios.topics', audio.id)"
+                                                                      class="text-sky-600 hover:text-sky-900"
+                                                                      title="GO TO">
+                                                                    {{ audio.title }}
+                                                                </Link>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ audio.topics_count }}
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div class="text-sm font-medium text-gray-900">
+                                                                {{ audio.topics_count }}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                                <td
-                                                    v-if="$page.props.auth.user.is_admin"
-                                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link :href="this.route('audios.edit', audio.id)"
-                                                          class="text-indigo-600 hover:text-indigo-900 mr-6">
-                                                        Edit
-                                                    </Link>
+                                                    <td
+                                                        v-if="$page.props.auth.user.is_admin"
+                                                        class="px-6 py-4 whitespace-nowrap space-x-3 text-right text-sm font-medium">
+                                                        <Link :href="this.route('audios.edit', audio.id)"
+                                                              title="Edit"
+                                                              class="px-4 py-2 rounded text-amber-900 bg-amber-200 hover:bg-amber-300">
+                                                            <font-awesome-icon icon="pen-to-square" />
+                                                        </Link>
 
-                                                    <Link :href="this.route('audios.destroy', audio.id)"
-                                                          method="delete"
-                                                          class="text-indigo-600 hover:text-indigo-900">
-                                                        Delete
-                                                    </Link>
-                                                </td>
-                                            </tr>
+                                                        <Link :href="this.route('audios.destroy', audio.id)"
+                                                              title="Delete"
+                                                              class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
+                                                              method="delete">
+                                                            <font-awesome-icon icon="trash" />
+                                                        </Link>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -104,11 +107,11 @@ import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 
 let props = defineProps({
-    audios:  Object,
+    audios: Object,
     filters: Object
 })
 
-let search = ref(props.filters.search);
+let search  = ref(props.filters.search);
 
 watch(search, debounce(function (value) {
     Inertia.get(route('audios'), { search: value }, { preserveState: true, replace: true });
