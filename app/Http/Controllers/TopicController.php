@@ -65,4 +65,10 @@ class TopicController extends Controller
         Topic::withTrashed()->where('id', $topicId)->restore();
         return back();
     }
+
+    public function forceDelete($topicId)
+    {
+        Topic::withTrashed()->where('id', $topicId)->forceDelete();
+        return back();
+    }
 }

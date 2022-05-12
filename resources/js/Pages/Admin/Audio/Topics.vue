@@ -236,6 +236,15 @@
                                                             preserve-scroll>
                                                             <font-awesome-icon icon="trash" />
                                                         </Link>
+                                                        <Link
+                                                            v-if="topic.deleted_at"
+                                                            :href="this.route('topics.forceDelete', topic.id)"
+                                                            class="px-4 py-2 rounded text-gray-900 bg-gray-200 hover:bg-gray-300"
+                                                            title="Permanently Delete"
+                                                            method="delete"
+                                                            preserveScroll>
+                                                            <font-awesome-icon icon="minus" />
+                                                        </Link>
                                                     </td>
                                                 </tr>
                                             </tbody>
