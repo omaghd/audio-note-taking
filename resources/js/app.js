@@ -12,6 +12,8 @@ import { dom } from "@fortawesome/fontawesome-svg-core";
 
 import Toast from "vue-toastification";
 
+import VueSweetalert2 from 'vue-sweetalert2';
+
 library.add(fas);
 dom.watch();
 
@@ -24,6 +26,7 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(Toast)
+            .use(VueSweetalert2)
             .mixin({ methods: { route } })
             .component('Head', Head)
             .component('Link', Link)

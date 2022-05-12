@@ -50,11 +50,5 @@ let props = defineProps({
     }
 })
 
-console.log(props.routeParams)
-
 const { query } = filterTopics();
 </script>
-
-<style scoped>
-
-</style>

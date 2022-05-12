@@ -14,11 +14,15 @@ class Topic extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function audio()
     {
         return $this->belongsTo(Audio::class);
     }
+
+    protected $casts = [
+        'done_at' => 'datetime:D, j M - H:i:s T'
+    ];
 }

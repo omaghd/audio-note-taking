@@ -162,7 +162,7 @@
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in audio.topics" :key="topic.id">
                                                     <td :class="{'border-l-4 border-green-400': topic.is_done}"
-                                                        class="px-6 py-4 whitespace-nowrap">
+                                                        class="px-6 py-4">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
@@ -204,7 +204,7 @@
 
                                                     <td class="px-6 py-4 space-x-3 whitespace-nowrap text-right text-sm font-medium">
                                                         <Link
-                                                            v-if="$page.props.auth.user.is_admin"
+                                                            v-if="$page.props.auth.user.is_admin && !topic.deleted_at"
                                                             :class="{
                                                                 'text-sky-900 bg-sky-200 hover:bg-sky-300': topic.is_done,
                                                                 'text-green-900 bg-green-200 hover:bg-green-300': !topic.is_done,
@@ -227,24 +227,20 @@
                                                             preserveScroll>
                                                             <font-awesome-icon icon="arrow-rotate-left" />
                                                         </Link>
-                                                        <Link
+                                                        <button
                                                             v-else-if="(topic.user_id === $page.props.auth.user.id) || $page.props.auth.user.is_admin"
-                                                            :href="route('topics.destroy', topic.id)"
+                                                            @click.prevent="destroy(topic.id)"
                                                             title="Delete"
-                                                            class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
-                                                            method="delete"
-                                                            preserve-scroll>
+                                                            class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300">
                                                             <font-awesome-icon icon="trash" />
-                                                        </Link>
-                                                        <Link
+                                                        </button>
+                                                        <button
                                                             v-if="topic.deleted_at"
-                                                            :href="this.route('topics.forceDelete', topic.id)"
+                                                            @click.prevent="forceDelete(topic.id)"
                                                             class="px-4 py-2 rounded text-gray-900 bg-gray-200 hover:bg-gray-300"
-                                                            title="Permanently Delete"
-                                                            method="delete"
-                                                            preserveScroll>
+                                                            title="Permanently Delete">
                                                             <font-awesome-icon icon="minus" />
-                                                        </Link>
+                                                        </button>
                                                     </td>
                                                 </tr>
 
@@ -272,7 +268,7 @@
 
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3'
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, inject } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { useToast } from "vue-toastification";
 import formatters from "@/Utils/formatters";
@@ -286,8 +282,6 @@ let props = defineProps({
     processing: Boolean
 });
 
-const toast = useToast();
-
 onMounted(() => {
     audioElement = document.querySelector('#audio');
 });
@@ -296,6 +290,8 @@ let form = useForm({
     title: null,
     time: null,
 });
+
+const toast = useToast();
 
 let submit = () => {
     form.post(route('audios.topics', props.audio.id), {
@@ -374,5 +370,45 @@ const getTrashTopics = () => {
         preserveScroll: true,
         replace: true
     });
+}
+
+const swal = inject('$swal');
+
+const showConfirmation = () => {
+    return swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0ea5e9',
+        cancelButtonColor: '#ef4444',
+        confirmButtonText: 'Yes!',
+        focusCancel: true
+    });
+}
+
+const destroy = id => {
+    showConfirmation().then((result) => {
+        if (result.isConfirmed) {
+            Inertia.delete(route('topics.destroy', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success('Deleted successfully!', { timeout: 3000 });
+                }
+            });
+        }
+    })
+}
+
+const forceDelete = id => {
+    showConfirmation().then((result) => {
+        if (result.isConfirmed) {
+            Inertia.delete(route('topics.forceDelete', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success('Permanently deleted successfully!', { timeout: 3000 });
+                }
+            });
+        }
+    })
 }
 </script>

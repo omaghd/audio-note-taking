@@ -44,7 +44,7 @@
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in topics.data" :key="topic.id">
                                                     <td :class="{'border-l-4 border-green-400': topic.is_done}"
-                                                        class="px-6 py-4 whitespace-nowrap">
+                                                        class="px-6 py-4">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
@@ -66,7 +66,7 @@
                                                         </div>
                                                     </td>
 
-                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                    <td class="px-6 py-4">
                                                         <div class="flex items-center">
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <Link
@@ -81,7 +81,7 @@
 
                                                     <td class="px-6 py-4 space-x-3 whitespace-nowrap text-right text-sm font-medium">
                                                         <Link
-                                                            v-if="$page.props.auth.user.is_admin"
+                                                            v-if="$page.props.auth.user.is_admin && !topic.deleted_at"
                                                             :class="{
                                                                 'text-sky-900 bg-sky-200 hover:bg-sky-300': topic.is_done,
                                                                 'text-green-900 bg-green-200 hover:bg-green-300': !topic.is_done,
@@ -104,24 +104,20 @@
                                                             preserveScroll>
                                                             <font-awesome-icon icon="arrow-rotate-left" />
                                                         </Link>
-                                                        <Link
+                                                        <button
                                                             v-else-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
-                                                            :href="this.route('topics.destroy', topic.id)"
+                                                            @click.prevent="destroy(topic.id)"
                                                             class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
-                                                            title="Delete"
-                                                            method="delete"
-                                                            preserveScroll>
+                                                            title="Delete">
                                                             <font-awesome-icon icon="trash" />
-                                                        </Link>
-                                                        <Link
+                                                        </button>
+                                                        <button
                                                             v-if="topic.deleted_at"
-                                                            :href="this.route('topics.forceDelete', topic.id)"
+                                                            @click.prevent="forceDelete(topic.id)"
                                                             class="px-4 py-2 rounded text-gray-900 bg-gray-200 hover:bg-gray-300"
-                                                            title="Permanently Delete"
-                                                            method="delete"
-                                                            preserveScroll>
+                                                            title="Permanently Delete">
                                                             <font-awesome-icon icon="minus" />
-                                                        </Link>
+                                                        </button>
                                                     </td>
                                                 </tr>
 
@@ -151,12 +147,13 @@
 
 <script setup>
 import Pagination from '@/Shared/Pagination';
-import { ref, watch } from "vue";
+import { ref, watch, inject } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 import FilterNav from "@/Components/Topics/FilterNav";
 import filterTopics from "@/Composables/filterTopics";
 import formatters from "@/Utils/formatters";
+import { useToast } from "vue-toastification";
 
 let props = defineProps({
     user: Object,
@@ -180,4 +177,45 @@ watch(search, debounce(function (value) {
 const { formatSeconds } = formatters();
 
 const { query } = filterTopics();
+
+const toast = useToast();
+const swal = inject('$swal');
+
+const showConfirmation = () => {
+    return swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0ea5e9',
+        cancelButtonColor: '#ef4444',
+        confirmButtonText: 'Yes!',
+        focusCancel: true
+    });
+}
+
+const destroy = id => {
+    showConfirmation().then((result) => {
+        if (result.isConfirmed) {
+            Inertia.delete(route('topics.destroy', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success('Deleted successfully!', { timeout: 3000 });
+                }
+            });
+        }
+    })
+}
+
+const forceDelete = id => {
+    showConfirmation().then((result) => {
+        if (result.isConfirmed) {
+            Inertia.delete(route('topics.forceDelete', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success('Permanently deleted successfully!', { timeout: 3000 });
+                }
+            });
+        }
+    })
+}
 </script>

@@ -106,10 +106,10 @@
                                                             <font-awesome-icon icon="pen-to-square" />
                                                         </Link>
 
-                                                        <Link :href="this.route('users.destroy', user.id)"
-                                                              title="Delete"
-                                                              class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
-                                                              method="delete">
+                                                        <Link
+                                                            @click.prevent="destroy(user.id)"
+                                                            title="Delete"
+                                                            class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300">
                                                             <font-awesome-icon icon="trash" />
                                                         </Link>
                                                     </td>
@@ -141,9 +141,10 @@
 
 <script setup>
 import Pagination from '@/Shared/Pagination';
-import { ref, watch } from "vue";
+import { inject, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
+import { useToast } from "vue-toastification";
 
 let props = defineProps({
     users: Object,
@@ -155,5 +156,33 @@ let search = ref(props.filters.search);
 watch(search, debounce(function (value) {
     Inertia.get(route('users'), { search: value }, { preserveState: true, replace: true });
 }, 300));
+
+const toast = useToast();
+const swal = inject('$swal');
+
+const showConfirmation = () => {
+    return swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0ea5e9',
+        cancelButtonColor: '#ef4444',
+        confirmButtonText: 'Yes!',
+        focusCancel: true
+    });
+}
+
+const destroy = id => {
+    showConfirmation().then((result) => {
+        if (result.isConfirmed) {
+            Inertia.delete(route('users.destroy', id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success('Deleted successfully!', { timeout: 3000 });
+                }
+            });
+        }
+    })
+}
 </script>
 
