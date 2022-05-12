@@ -85,6 +85,16 @@
                                                         </Link>
                                                     </td>
                                                 </tr>
+
+                                                <tr v-if="!audios.data.length">
+                                                    <td class="px-6 py-4 whitespace-nowrap" colspan="5">
+                                                        <div class="flex items-center">
+                                                            <strong class="text-sm font-bold text-gray-900">
+                                                                No Data...
+                                                            </strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -111,7 +121,7 @@ let props = defineProps({
     filters: Object
 })
 
-let search  = ref(props.filters.search);
+let search = ref(props.filters.search);
 
 watch(search, debounce(function (value) {
     Inertia.get(route('audios'), { search: value }, { preserveState: true, replace: true });

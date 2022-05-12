@@ -124,6 +124,16 @@
                                                         </Link>
                                                     </td>
                                                 </tr>
+
+                                                <tr v-if="!topics.data.length">
+                                                    <td class="px-6 py-4 whitespace-nowrap" colspan="5">
+                                                        <div class="flex items-center">
+                                                            <strong class="text-sm font-bold text-gray-900">
+                                                                No Data...
+                                                            </strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
