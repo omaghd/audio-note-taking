@@ -10,6 +10,9 @@ class TopicController extends Controller
 {
     public function index()
     {
+        if (Request::filled('trash'))
+            $this->authorize('is-admin');
+
         $topics = Request::filled('trash')
             ? Topic::onlyTrashed()
                 ->orderByDesc('deleted_at')

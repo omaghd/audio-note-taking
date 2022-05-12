@@ -108,24 +108,32 @@
 
                         <div class="space-x-2 select-none text-sm text-gray-400 mb-6">
                             <button
-                                :class="{'font-bold text-gray-800' : currentUrl === `/audios/${audio.id}/topics`}"
+                                :class="{'font-bold text-gray-800' : query.all}"
                                 class="hover:text-gray-900 uppercase"
                                 @click.prevent="getAll">
                                 All topics
                             </button>
                             <span>|</span>
                             <button
-                                :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/audios/${audio.id}/topics?done=1`)}"
+                                :class="{'font-bold text-gray-800' : query.done}"
                                 class="hover:text-gray-900 uppercase"
                                 @click.prevent="getDoneTopics">
                                 Done topics
                             </button>
                             <span>|</span>
                             <button
-                                :class="{'font-bold text-gray-800' : currentUrl.startsWith(`/audios/${audio.id}/topics?undone=1`)}"
+                                :class="{'font-bold text-gray-800' : query.undone}"
                                 class="hover:text-gray-900 uppercase"
                                 @click.prevent="getUndoneTopics">
                                 Undone topics
+                            </button>
+                            <span v-if="$page.props.auth.user.is_admin">|</span>
+                            <button
+                                v-if="$page.props.auth.user.is_admin"
+                                :class="{'font-bold text-gray-800' : query.trash}"
+                                class="hover:text-gray-900 uppercase"
+                                @click.prevent="getTrashTopics">
+                                Trash
                             </button>
                         </div>
 
@@ -196,7 +204,7 @@
 
                                                     <td class="px-6 py-4 space-x-3 whitespace-nowrap text-right text-sm font-medium">
                                                         <Link
-                                                            v-if="(topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin) && $page.props.auth.user.is_admin"
+                                                            v-if="$page.props.auth.user.is_admin"
                                                             :class="{
                                                                 'text-sky-900 bg-sky-200 hover:bg-sky-300': topic.is_done,
                                                                 'text-green-900 bg-green-200 hover:bg-green-300': !topic.is_done,
@@ -210,9 +218,17 @@
                                                                                icon="square-xmark" />
                                                             <font-awesome-icon v-else icon="square-check" />
                                                         </Link>
-
                                                         <Link
-                                                            v-if="topic.user_id === $page.props.auth.user.id || $page.props.auth.user.is_admin"
+                                                            v-if="topic.deleted_at && $page.props.auth.user.is_admin"
+                                                            :href="this.route('topics.restore', topic.id)"
+                                                            class="px-4 py-2 rounded text-green-900 bg-green-200 hover:bg-green-300"
+                                                            title="Restore"
+                                                            method="patch"
+                                                            preserveScroll>
+                                                            <font-awesome-icon icon="arrow-rotate-left" />
+                                                        </Link>
+                                                        <Link
+                                                            v-else-if="(topic.user_id === $page.props.auth.user.id) || $page.props.auth.user.is_admin"
                                                             :href="route('topics.destroy', topic.id)"
                                                             title="Delete"
                                                             class="px-4 py-2 rounded text-red-900 bg-red-200 hover:bg-red-300"
@@ -240,6 +256,7 @@ import { useForm, usePage } from '@inertiajs/inertia-vue3'
 import { computed, onMounted, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { useToast } from "vue-toastification";
+import FilterNav from "@/Components/Topics/FilterNav";
 
 const processing = ref(false);
 let audioElement;
@@ -290,14 +307,6 @@ let forward = () => {
     audioElement.currentTime += 10;
 }
 
-let pause = () => {
-    audioElement.pause();
-}
-
-let play = () => {
-    audioElement.play();
-}
-
 let goTo = (seconds) => {
     audioElement.currentTime = seconds;
 }
@@ -308,6 +317,16 @@ let formatSeconds = (seconds) => {
 }
 
 const currentUrl = computed(() => usePage().url.value);
+
+const query = computed(() => {
+    if (currentUrl.value.includes('/topics?done'))
+        return { done: 1 };
+    else if (currentUrl.value.includes('/topics?undone'))
+        return { undone: 1 };
+    else if (currentUrl.value.includes('/topics?trash'))
+        return { trash: 1 };
+    return { all: 1 };
+});
 
 const getAll = () => {
     Inertia.get(route('audios.topics', { audio: props.audio.id }), {}, {
@@ -327,6 +346,14 @@ const getDoneTopics = () => {
 
 const getUndoneTopics = () => {
     Inertia.get(route('audios.topics', { audio: props.audio.id, undone: 1 }), {}, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+    });
+}
+
+const getTrashTopics = () => {
+    Inertia.get(route('audios.topics', { audio: props.audio.id, trash: 1 }), {}, {
         preserveState: true,
         preserveScroll: true,
         replace: true
