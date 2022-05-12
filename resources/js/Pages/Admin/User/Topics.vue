@@ -137,6 +137,7 @@ import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 import FilterNav from "@/Components/Topics/FilterNav";
 import filterTopics from "@/Composables/filterTopics";
+import formatters from "@/Utils/formatters";
 
 let props = defineProps({
     user: Object,
@@ -157,10 +158,7 @@ watch(search, debounce(function (value) {
         { preserveState: true, replace: true });
 }, 300));
 
-let formatSeconds = (seconds) => {
-    if (isNaN(seconds)) seconds = 0;
-    return new Date(seconds * 1000).toISOString().substr(11, 8);
-}
+const { formatSeconds } = formatters();
 
 const { query } = filterTopics();
 </script>

@@ -256,7 +256,7 @@ import { useForm, usePage } from '@inertiajs/inertia-vue3'
 import { computed, onMounted, ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { useToast } from "vue-toastification";
-import FilterNav from "@/Components/Topics/FilterNav";
+import formatters from "@/Utils/formatters";
 
 const processing = ref(false);
 let audioElement;
@@ -294,6 +294,8 @@ let submit = () => {
     })
 }
 
+const { formatSeconds } = formatters();
+
 let mark = () => {
     audioElement.pause();
     form.time = audioElement.currentTime;
@@ -309,11 +311,6 @@ let forward = () => {
 
 let goTo = (seconds) => {
     audioElement.currentTime = seconds;
-}
-
-let formatSeconds = (seconds) => {
-    if (isNaN(seconds)) seconds = 0;
-    return new Date(seconds * 1000).toISOString().substr(11, 8);
 }
 
 const currentUrl = computed(() => usePage().url.value);

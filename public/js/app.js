@@ -34812,7 +34812,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var vue_toastification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toastification */ "./node_modules/vue-toastification/dist/index.mjs");
-/* harmony import */ var _Components_Topics_FilterNav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Topics/FilterNav */ "./resources/js/Components/Topics/FilterNav.vue");
+/* harmony import */ var _Utils_formatters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Utils/formatters */ "./resources/js/Utils/formatters.js");
 
 
 
@@ -34857,6 +34857,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
 
+    var _formatters = (0,_Utils_formatters__WEBPACK_IMPORTED_MODULE_4__["default"])(),
+        formatSeconds = _formatters.formatSeconds;
+
     var mark = function mark() {
       audioElement.pause();
       form.time = audioElement.currentTime;
@@ -34872,11 +34875,6 @@ __webpack_require__.r(__webpack_exports__);
 
     var goTo = function goTo(seconds) {
       audioElement.currentTime = seconds;
-    };
-
-    var formatSeconds = function formatSeconds(seconds) {
-      if (isNaN(seconds)) seconds = 0;
-      return new Date(seconds * 1000).toISOString().substr(11, 8);
     };
 
     var currentUrl = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
@@ -34945,11 +34943,11 @@ __webpack_require__.r(__webpack_exports__);
       toast: toast,
       form: form,
       submit: submit,
+      formatSeconds: formatSeconds,
       mark: mark,
       backward: backward,
       forward: forward,
       goTo: goTo,
-      formatSeconds: formatSeconds,
       currentUrl: currentUrl,
       query: query,
       getAll: getAll,
@@ -34964,7 +34962,7 @@ __webpack_require__.r(__webpack_exports__);
       watch: vue__WEBPACK_IMPORTED_MODULE_1__.watch,
       Inertia: _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia,
       useToast: vue_toastification__WEBPACK_IMPORTED_MODULE_3__.useToast,
-      FilterNav: _Components_Topics_FilterNav__WEBPACK_IMPORTED_MODULE_4__["default"]
+      formatters: _Utils_formatters__WEBPACK_IMPORTED_MODULE_4__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -34994,6 +34992,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Components_Topics_FilterNav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Topics/FilterNav */ "./resources/js/Components/Topics/FilterNav.vue");
 /* harmony import */ var _Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Composables/filterTopics */ "./resources/js/Composables/filterTopics.js");
+/* harmony import */ var _Utils_formatters__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Utils/formatters */ "./resources/js/Utils/formatters.js");
+
 
 
 
@@ -35019,10 +35019,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     }, 300));
 
-    var formatSeconds = function formatSeconds(seconds) {
-      if (isNaN(seconds)) seconds = 0;
-      return new Date(seconds * 1000).toISOString().substr(11, 8);
-    };
+    var _formatters = (0,_Utils_formatters__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+        formatSeconds = _formatters.formatSeconds;
 
     var _filterTopics = (0,_Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__["default"])(),
         query = _filterTopics.query;
@@ -35038,7 +35036,8 @@ __webpack_require__.r(__webpack_exports__);
       Inertia: _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia,
       debounce: (lodash_debounce__WEBPACK_IMPORTED_MODULE_3___default()),
       FilterNav: _Components_Topics_FilterNav__WEBPACK_IMPORTED_MODULE_4__["default"],
-      filterTopics: _Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__["default"]
+      filterTopics: _Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__["default"],
+      formatters: _Utils_formatters__WEBPACK_IMPORTED_MODULE_6__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -35260,6 +35259,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Components_Topics_FilterNav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Topics/FilterNav */ "./resources/js/Components/Topics/FilterNav.vue");
 /* harmony import */ var _Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Composables/filterTopics */ "./resources/js/Composables/filterTopics.js");
+/* harmony import */ var _Utils_formatters__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Utils/formatters */ "./resources/js/Utils/formatters.js");
+
 
 
 
@@ -35291,10 +35292,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     }, 300));
 
-    var formatSeconds = function formatSeconds(seconds) {
-      if (isNaN(seconds)) seconds = 0;
-      return new Date(seconds * 1000).toISOString().substr(11, 8);
-    };
+    var _formatters = (0,_Utils_formatters__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+        formatSeconds = _formatters.formatSeconds;
 
     var _filterTopics = (0,_Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__["default"])(),
         query = _filterTopics.query;
@@ -35310,7 +35309,8 @@ __webpack_require__.r(__webpack_exports__);
       Inertia: _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia,
       debounce: (lodash_debounce__WEBPACK_IMPORTED_MODULE_3___default()),
       FilterNav: _Components_Topics_FilterNav__WEBPACK_IMPORTED_MODULE_4__["default"],
-      filterTopics: _Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__["default"]
+      filterTopics: _Composables_filterTopics__WEBPACK_IMPORTED_MODULE_5__["default"],
+      formatters: _Utils_formatters__WEBPACK_IMPORTED_MODULE_6__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -39556,6 +39556,32 @@ var filterTopics = function filterTopics() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (filterTopics);
+
+/***/ }),
+
+/***/ "./resources/js/Utils/formatters.js":
+/*!******************************************!*\
+  !*** ./resources/js/Utils/formatters.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var formatters = function formatters() {
+  var formatSeconds = function formatSeconds(seconds) {
+    if (isNaN(seconds)) seconds = 0;
+    return new Date(seconds * 1000).toISOString().substr(11, 8);
+  };
+
+  return {
+    formatSeconds: formatSeconds
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatters);
 
 /***/ }),
 
