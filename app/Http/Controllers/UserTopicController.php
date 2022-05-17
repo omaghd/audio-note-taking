@@ -32,6 +32,7 @@ class UserTopicController extends Controller
                 ->when(request()->input('search'), function ($query, $search) {
                     $query->where('title', 'like', "%{$search}%");
                 })
+                ->where('user_id', $user->id)
                 ->with(['user', 'audio'])
                 ->paginate(10)
                 ->withQueryString(),
