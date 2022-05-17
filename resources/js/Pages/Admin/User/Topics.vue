@@ -44,7 +44,7 @@
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <tr v-for="topic in topics.data" :key="topic.id">
                                                     <td :class="{'border-l-4 border-green-400': topic.is_done}"
-                                                        class="px-6 py-4">
+                                                        class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
                                                                 {{ topic.title }}
@@ -66,7 +66,7 @@
                                                         </div>
                                                     </td>
 
-                                                    <td class="px-6 py-4">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="text-sm font-medium text-gray-900">
                                                                 <Link

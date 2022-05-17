@@ -37683,7 +37683,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
             'border-l-4 border-green-400': topic.is_done
-          }, "px-6 py-4"])
+          }, "px-6 py-4 whitespace-nowrap"])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(topic.title) + " ", 1
         /* TEXT */
         ), topic.done_at ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_43, " DONE AT: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(topic.done_at), 1
@@ -37893,7 +37893,7 @@ var _hoisted_20 = {
   "class": "text-sm font-medium text-gray-900"
 };
 var _hoisted_21 = {
-  "class": "px-6 py-4"
+  "class": "px-6 py-4 whitespace-nowrap"
 };
 var _hoisted_22 = {
   "class": "flex items-center"
@@ -37966,7 +37966,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
             'border-l-4 border-green-400': topic.is_done
-          }, "px-6 py-4"])
+          }, "px-6 py-4 whitespace-nowrap"])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(topic.title) + " ", 1
         /* TEXT */
         ), topic.done_at ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_16, " DONE AT: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(topic.done_at), 1
@@ -38976,7 +38976,7 @@ var _hoisted_20 = {
   "class": "text-sm font-medium text-gray-900"
 };
 var _hoisted_21 = {
-  "class": "px-6 py-4"
+  "class": "px-6 py-4 whitespace-nowrap"
 };
 var _hoisted_22 = {
   "class": "flex items-center"
@@ -39049,7 +39049,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
             'border-l-4 border-green-400': topic.is_done
-          }, "px-6 py-4"])
+          }, "px-6 py-4 whitespace-nowrap"])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(topic.title) + " ", 1
         /* TEXT */
         ), topic.done_at ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_16, " DONE AT: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(topic.done_at), 1
