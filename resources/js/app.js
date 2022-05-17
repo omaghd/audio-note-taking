@@ -14,6 +14,8 @@ import Toast from "vue-toastification";
 
 import VueSweetalert2 from 'vue-sweetalert2';
 
+import VuePlyr from 'vue-plyr'
+
 library.add(fas);
 dom.watch();
 
@@ -27,6 +29,9 @@ createInertiaApp({
             .use(plugin)
             .use(Toast)
             .use(VueSweetalert2)
+            .use(VuePlyr, {
+                plyr: { invertTime: false }
+            })
             .mixin({ methods: { route } })
             .component('Head', Head)
             .component('Link', Link)

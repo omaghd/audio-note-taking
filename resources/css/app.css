@@ -5,3 +5,5 @@
 @import "vue-toastification/dist/index.css";
 
 @import 'sweetalert2/dist/sweetalert2.min.css';
+
+@import 'vue-plyr/dist/vue-plyr.css';

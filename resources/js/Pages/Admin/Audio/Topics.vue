@@ -10,14 +10,21 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <form class="max-w-md mx-auto mt-8" @submit.prevent="submit">
                             <div class="mb-6">
-                                <audio id="audio" :src="`${route('root')}${audio.path.replace('public', '/storage')}`"
-                                       class="flex mb-3 m-auto"
-                                       controls>
-                                </audio>
+                                <vue-plyr>
+                                    <audio
+                                        crossorigin
+                                        id="audio"
+                                        :src="`${route('root')}${audio.path.replace('public', '/storage')}`"
+                                        class="flex mb-3 m-auto"
+                                        type="audio/mp3"
+                                        controls>
+                                    </audio>
+                                </vue-plyr>
+
 
                                 <section class="flex justify-evenly">
                                     <button
