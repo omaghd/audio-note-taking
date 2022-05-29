@@ -35064,7 +35064,7 @@ __webpack_require__.r(__webpack_exports__);
       form.id = topic.id;
       form.time = topic.time;
       form.title = topic.title;
-      window.location = "#audio";
+      window.location = "#audio_area";
     };
 
     var reset = function reset() {
@@ -37587,7 +37587,7 @@ var _hoisted_6 = {
 };
 var _hoisted_7 = {
   "class": "mb-6",
-  id: "audio"
+  id: "audio_area"
 };
 var _hoisted_8 = ["src"];
 var _hoisted_9 = {
@@ -37740,6 +37740,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("audio", {
             crossorigin: "",
+            id: "audio",
             src: "".concat(_ctx.route('root')).concat($props.audio.path.replace('public', '/storage')),
             "class": "flex mb-3 m-auto",
             type: "audio/mp3",
