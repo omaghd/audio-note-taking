@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{topic}', [TopicController::class, 'destroy'])
             ->name('topics.destroy')
             ->can('delete-topic', 'topic');
+        Route::put('{topic}/update', [TopicController::class, 'update'])->name('topics.update');
 
         Route::middleware(['can:is-admin'])->group(function () {
             Route::patch('{topic}/done', [TopicController::class, 'done'])->name('topics.done');

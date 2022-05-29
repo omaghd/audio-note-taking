@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
@@ -70,5 +71,23 @@ class TopicController extends Controller
     {
         Topic::withTrashed()->where('id', $topicId)->forceDelete();
         return back();
+    }
+
+    public function update(Topic $topic)
+    {
+        if ($topic->user_id != Auth::user()->id && !Auth::user()->is_admin)
+            abort(403);
+
+        Request::validate([
+            'title' => 'required|string',
+            'time'  => 'required|numeric'
+        ]);
+
+        $topic->title = Request::input('title');
+        $topic->time  = Request::input('time');
+
+        $topic->save();
+
+        return back()->with('message', 'Updated successfully!');
     }
 }

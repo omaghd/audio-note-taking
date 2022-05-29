@@ -12,7 +12,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <form class="max-w-md mx-auto mt-8" @submit.prevent="submit">
+                        <div class="max-w-md mx-auto mt-8">
                             <div class="mb-6">
                                 <vue-plyr>
                                     <audio
@@ -58,61 +58,15 @@
 
                             <hr>
 
-                            <div class="my-6">
-                                <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="title">
-                                    Title
-                                </label>
-
-                                <input id="title"
-                                       v-model="form.title"
-                                       dir="rtl"
-                                       class="border border-gray-400 rounded p-2 w-full"
-                                       name="title"
-                                       required type="text" />
-                                <div v-if="errors.title" class="text-red-500 text-xs mt-1"
-                                     v-text="errors.title"></div>
-                            </div>
-                            <div class="mb-6">
-                                <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="time">
-                                    Time
-                                </label>
-
-                                <div class="flex flex-wrap items-stretch w-full relative">
-                                    <input id="time"
-                                           v-model="form.time"
-                                           class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border border-gray-400 rounded rounded-r-none p-2 w-full relative"
-                                           name="time" required
-                                           type="text">
-                                    <div class="flex -mr-px">
-                                    <span
-                                        class="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 border-gray-400 px-3 whitespace-no-wrap text-grey-dark text-sm">
-                                        {{ formatSeconds(form.time) }}
-                                    </span>
-                                    </div>
-                                </div>
-
-                                <div v-if="errors.time" class="text-red-500 text-xs mt-1" v-text="errors.time"></div>
-                            </div>
-
-                            <div class="mb-6">
-                                <button :class="{'cursor-not-allowed': processing}"
-                                        :disabled="processing"
-                                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-sky-700 hover:bg-sky-600 transition ease-in-out duration-150"
-                                        type="submit">
-                                    <svg
-                                        v-if="processing"
-                                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                        fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                                stroke-width="4"></circle>
-                                        <path class="opacity-75"
-                                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                              fill="currentColor"></path>
-                                    </svg>
-                                    Create
-                                </button>
-                            </div>
-                        </form>
+                            <Form :data="form"
+                                  :errors="errors"
+                                  :format-seconds="formatSeconds"
+                                  :processing="processing"
+                                  :isEditing="isEditing"
+                                  :submit="isEditing ? update : submit"
+                                  @cancel="reset"
+                            />
+                        </div>
 
                         <div class="space-x-2 select-none text-sm text-gray-400 mb-6">
                             <button
@@ -173,7 +127,13 @@
                                                         class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div class="font-medium text-gray-900">
-                                                                {{ topic.title }}
+                                                                <span
+                                                                    v-if="$page.props.auth.user.is_admin || $page.props.auth.user.id === topic.user_id"
+                                                                    class="select-none cursor-pointer"
+                                                                    @dblclick="toggleEdit(topic)">
+                                                                    {{ topic.title }}
+                                                                </span>
+                                                                <span v-else>{{ topic.title }}</span>
                                                                 <p v-if="topic.done_at" class="text-xs text-gray-400">
                                                                     DONE AT: {{ topic.done_at }}
                                                                 </p>
@@ -280,6 +240,7 @@ import { computed, onMounted, ref, inject } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { useToast } from "vue-toastification";
 import formatters from "@/Utils/formatters";
+import Form from "@/Components/Topics/Form";
 
 const processing = ref(false);
 let audioElement;
@@ -295,6 +256,7 @@ onMounted(() => {
 });
 
 let form = useForm({
+    id: null,
     title: null,
     time: null,
 });
@@ -419,4 +381,41 @@ const forceDelete = id => {
         }
     })
 }
+
+const isEditing = ref(false)
+const topicId = ref(null)
+
+const toggleEdit = (topic) => {
+    topicId.value = topic.id
+    isEditing.value = true
+
+    form.id = topic.id
+    form.time = topic.time
+    form.title = topic.title
+
+    window.location = "#audio"
+}
+
+const reset = () => {
+    isEditing.value = false;
+    topicId.value = null;
+    form.reset();
+}
+
+let update = () => {
+    form.put(route('topics.update', topicId.value), {
+        onStart: () => {
+            processing.value = true;
+        },
+        preserveScroll: true,
+        onSuccess: () => {
+            reset();
+            toast.success('Updated successfully!', { timeout: 2500 });
+        },
+        onFinish: () => {
+            processing.value = false;
+        }
+    })
+}
+
 </script>
