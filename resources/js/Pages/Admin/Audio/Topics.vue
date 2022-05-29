@@ -65,6 +65,7 @@
 
                                 <input id="title"
                                        v-model="form.title"
+                                       dir="rtl"
                                        class="border border-gray-400 rounded p-2 w-full"
                                        name="title"
                                        required type="text" />
