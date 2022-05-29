@@ -13,11 +13,10 @@
                 <div class="bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="max-w-md mx-auto mt-8">
-                            <div class="mb-6">
+                            <div class="mb-6" id="audio">
                                 <vue-plyr>
                                     <audio
                                         crossorigin
-                                        id="audio"
                                         :src="`${route('root')}${audio.path.replace('public', '/storage')}`"
                                         class="flex mb-3 m-auto"
                                         type="audio/mp3"

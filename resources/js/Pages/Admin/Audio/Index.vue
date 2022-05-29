@@ -146,7 +146,7 @@ const showConfirmation = () => {
 const destroy = id => {
     showConfirmation().then((result) => {
         if (result.isConfirmed) {
-            Inertia.delete(route('users.destroy', id), {
+            Inertia.delete(route('audios.destroy', id), {
                 preserveScroll: true,
                 onSuccess: () => {
                     toast.success('Deleted successfully!', { timeout: 3000 });

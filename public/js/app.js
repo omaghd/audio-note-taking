@@ -34832,7 +34832,7 @@ __webpack_require__.r(__webpack_exports__);
     var destroy = function destroy(id) {
       showConfirmation().then(function (result) {
         if (result.isConfirmed) {
-          _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia["delete"](route('users.destroy', id), {
+          _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia["delete"](route('audios.destroy', id), {
             preserveScroll: true,
             onSuccess: function onSuccess() {
               toast.success('Deleted successfully!', {
@@ -37586,7 +37586,8 @@ var _hoisted_6 = {
   "class": "max-w-md mx-auto mt-8"
 };
 var _hoisted_7 = {
-  "class": "mb-6"
+  "class": "mb-6",
+  id: "audio"
 };
 var _hoisted_8 = ["src"];
 var _hoisted_9 = {
@@ -37739,7 +37740,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("audio", {
             crossorigin: "",
-            id: "audio",
             src: "".concat(_ctx.route('root')).concat($props.audio.path.replace('public', '/storage')),
             "class": "flex mb-3 m-auto",
             type: "audio/mp3",

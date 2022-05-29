@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audio;
+use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
@@ -72,7 +73,9 @@ class AudioController extends Controller
 
     public function destroy(Audio $audio)
     {
+        $audio->topics()->delete();
         $audio->delete();
+
         return back();
     }
 }
