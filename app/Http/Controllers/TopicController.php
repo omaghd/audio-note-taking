@@ -14,6 +14,8 @@ class TopicController extends Controller
         if (Request::filled('trash'))
             $this->authorize('is-admin');
 
+        $orderBy = request()->input('done') ? "done_at": "created_at";
+
         $topics = Request::filled('trash')
             ? Topic::onlyTrashed()
                 ->orderByDesc('deleted_at')
@@ -24,7 +26,7 @@ class TopicController extends Controller
                 ->when(request()->input('undone'), function ($query) {
                     $query->where('is_done', 0);
                 })
-                ->latest();
+                ->orderByDesc($orderBy);
 
         return Inertia::render('Admin/Topic/Index', [
             'topics' => $topics
