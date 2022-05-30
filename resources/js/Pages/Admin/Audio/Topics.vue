@@ -42,7 +42,7 @@
                                         type="button"
                                         @click="forward"
                                     >
-                                        <font-awesome-icon icon="forward" />
+                                        <font-awesome-icon icon="forward" /> + 10s
                                     </button>
 
                                     <button
@@ -51,7 +51,7 @@
                                         type="button"
                                         @click="backward"
                                     >
-                                        <font-awesome-icon icon="backward" />
+                                        <font-awesome-icon icon="backward" /> - 5s
                                     </button>
                                 </section>
                             </div>
@@ -287,7 +287,7 @@ let mark = () => {
 }
 
 let backward = () => {
-    audioElement.currentTime -= 1;
+    audioElement.currentTime -= 5;
 }
 
 let forward = () => {
